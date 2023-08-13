@@ -36,6 +36,7 @@ export default async function Home({searchParams}) {
                     tags={searchParams.tags?.split(",") || []}
                 />
             </div>
+           {/*// TODO create pagination component */}
         </div>
     )
 }

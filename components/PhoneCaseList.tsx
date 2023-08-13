@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 
 async function fetchImagePhoneCases(page = 1, tags = []) {
@@ -13,13 +14,14 @@ async function fetchImagePhoneCases(page = 1, tags = []) {
 
 export async function PhoneCaseList({page = 1, tags = []}) {
     const cases = await fetchImagePhoneCases(page, tags || [])
-    console.log("cases", cases)
 
     return (
         <div className="grid grid-rows-3 grid-cols-4 gap-5 py-2">
             {
                 cases.results.map(c => (
-                    <PhoneCase {...c}/>
+                    <Link key={c.id} href={`/cases/${c.id}`}>
+                        <PhoneCase {...c}/>
+                    </Link>
                 ))
             }
         </div>
