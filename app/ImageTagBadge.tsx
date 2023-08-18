@@ -1,6 +1,7 @@
 "use client"
 
 import {redirect, useRouter, useSearchParams} from "next/navigation";
+import {useCallback} from "react";
 
 export function ImageTagBudget({tag, isSelected}) {
     const searchParams = useSearchParams()
@@ -12,17 +13,22 @@ export function ImageTagBudget({tag, isSelected}) {
         + (isSelected ? " bg-white text-black hover:bg-white/90 " : " text-white hover:bg-white/10")
     )
 
-    const onClick = () => {
-        let tags = searchParams.get("tags")?.split(",") || []
-        if (isSelected) {
-            tags = tags.filter(t => t != tag)
-        } else {
-            tags.push(tag)
-        }
+    const onClick = useCallback(
+        () => {
+            let tags = searchParams.get("tags")?.split(",") || []
+            if (isSelected) {
+                tags = tags.filter(t => t != tag)
+            } else {
+                tags.push(tag)
+            }
 
-        if (tags.length > 0) router.push("/?tags=" + tags.join(","))
-        else router.push("/")
-    }
+            const params = new URLSearchParams(searchParams)
+            if (tags.length > 0 ) params.set("tags", tags.join(","))
+
+            router.push("/?" + params.toString())
+        },
+        [searchParams]
+    )
 
     return (
         <div

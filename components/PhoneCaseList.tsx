@@ -1,22 +1,26 @@
 import Link from "next/link";
+import {makeReadable} from "@/utils/money";
 
 
-async function fetchImagePhoneCases(page = 1, tags = []) {
+async function fetchImagePhoneCases(page = 1, tags = [], case_id = undefined) {
+    const params = new URLSearchParams({
+        page: String(page), tags: tags.join(",")
+    })
+    if (case_id) params.set("case_id", case_id)
+
     let resp = await fetch(
-        "http://127.0.0.1:8000/api/v1/images-phone-cases?" + new URLSearchParams({
-            page: String(page), tags: tags.join(",")
-        })
+        "http://127.0.0.1:8000/api/v1/images-phone-cases?" + params
     )
     resp = await resp.json()
     return resp
 }
 
 
-export async function PhoneCaseList({page = 1, tags = []}) {
-    const cases = await fetchImagePhoneCases(page, tags || [])
+export async function PhoneCaseList({page = 1, tags = [], case_id = undefined}) {
+    const cases = await fetchImagePhoneCases(page, tags || [], case_id)
 
     return (
-        <div className="grid grid-rows-3 grid-cols-4 gap-5 py-2">
+        <div className="grid p-5 grid-cols-4 gap-5 w-full">
             {
                 cases.results.map(c => (
                     <Link key={c.id} href={`/cases/${c.id}`}>
@@ -29,11 +33,11 @@ export async function PhoneCaseList({page = 1, tags = []}) {
 }
 
 
-export function PhoneCase({thumbnail, tags}) {
+export function PhoneCase({thumbnail, tags, image_description, phone_case}) {
     return (
         <div className="bg-white shadow-lg p-2 rounded-lg border cursor-pointer">
-            <div className="relative">
-                <img className="w-52" src={thumbnail}/>
+            <div className="relative flex justify-center">
+                <img className="w-52" alt={image_description} src={thumbnail}/>
 
                 <div className="transition ease-in opacity-0 hover:opacity-100 flex flex-col bg-gradient-to-t from-white justify-end absolute bottom-0 top-0 left-0 right-0">
                     <div className="py-4 flex flex-col items-center bg-white">
@@ -51,8 +55,10 @@ export function PhoneCase({thumbnail, tags}) {
                 </div>
             </div>
 
-            <div className="flex">
-                <p className="text-sm text-gray-500">{tags.join(", ")}</p>
+            <div className="px-2">
+                <p className="text-lg font-semibold truncate ...">{image_description}</p>
+                <p className="text-md text-gray-500">${makeReadable(phone_case.sale_price)}</p>
+                <p className="text-sm text-gray-500 truncate ...">{tags.join(", ")}</p>
             </div>
         </div>
     )

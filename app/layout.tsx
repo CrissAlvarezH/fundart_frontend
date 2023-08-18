@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import {Header} from "@/components/Header";
+import {Header} from "@/components/header/Header";
+import {NextUi} from "@/app/providers";
 
 export const metadata: Metadata = {
   title: 'Fundart',
@@ -11,11 +12,13 @@ export default function RootLayout({children, modal}: { children: React.ReactNod
   return (
     <html lang="en">
         <body>
-            <div>
-                <Header />
-                {children}
-                {modal}
-            </div>
+            <NextUi>
+                <div>
+                    <Header />
+                    {children}
+                    {modal}
+                </div>
+            </NextUi>
         </body>
     </html>
   )

@@ -1,4 +1,4 @@
-import {Header} from "@/components/Header";
+import {Header} from "@/components/header/Header";
 import {ImageTagBudget} from "@/app/ImageTagBadge";
 import {PhoneCaseList} from "@/components/PhoneCaseList";
 
@@ -34,6 +34,7 @@ export default async function Home({searchParams}) {
                 <PhoneCaseList
                     page={searchParams.page || 1}
                     tags={searchParams.tags?.split(",") || []}
+                    case_id={searchParams.case_id}
                 />
             </div>
            {/*// TODO create pagination component */}
