@@ -1,5 +1,7 @@
 import Link from "next/link";
 import {makeReadable} from "@/utils/money";
+import {Pagination} from "@nextui-org/pagination";
+import {PhoneCasePagination} from "@/components/phone-case-list/PhoneCasePagination";
 
 
 async function fetchImagePhoneCases(page = 1, tags = [], case_id = undefined) {
@@ -20,14 +22,19 @@ export async function PhoneCaseList({page = 1, tags = [], case_id = undefined}) 
     const cases = await fetchImagePhoneCases(page, tags || [], case_id)
 
     return (
-        <div className="grid p-5 grid-cols-4 gap-5 w-full">
-            {
-                cases.results.map(c => (
-                    <Link key={c.id} href={`/cases/${c.id}`}>
-                        <PhoneCase {...c}/>
-                    </Link>
-                ))
-            }
+        <div className="w-full">
+            <div className="grid p-5 grid-cols-4 gap-5 w-full">
+                {
+                    cases.results.map(c => (
+                        <Link key={c.id} href={`/cases/${c.id}`}>
+                            <PhoneCase {...c}/>
+                        </Link>
+                    ))
+                }
+            </div>
+            <div className="flex justify-center pb-5 pt-2">
+                <PhoneCasePagination page={page} total={cases.pagination.total_pages}/>
+            </div>
         </div>
     )
 }

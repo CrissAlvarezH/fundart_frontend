@@ -1,6 +1,7 @@
 import {Header} from "@/components/header/Header";
 import {ImageTagBudget} from "@/app/ImageTagBadge";
-import {PhoneCaseList} from "@/components/PhoneCaseList";
+import {PhoneCaseList} from "@/components/phone-case-list/PhoneCaseList";
+import {Pagination} from "@nextui-org/pagination";
 
 async function fetchTags() {
     let resp = await fetch("http://127.0.0.1:8000/api/v1/tags")
@@ -37,7 +38,6 @@ export default async function Home({searchParams}) {
                     case_id={searchParams.case_id}
                 />
             </div>
-           {/*// TODO create pagination component */}
         </div>
     )
 }
