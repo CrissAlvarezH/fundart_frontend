@@ -155,7 +155,7 @@ export function PhoneCaseSelects({summary}) {
 
 
 function PopoverInfo({children}) {
-    const [isOpen, setIsOpen] = useState(true)
+    const [isOpen, setIsOpen] = useState(false)
     return (
         <Popover showArrow backdrop="opaque" placement="bottom" isOpen={isOpen}>
             <PopoverTrigger>
