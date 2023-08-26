@@ -64,7 +64,19 @@ export function PhoneCase({thumbnail, tags, image_description, phone_case}) {
 
             <div className="px-2">
                 <p className="text-lg font-semibold truncate ...">{image_description}</p>
-                <p className="text-md text-gray-500">${makeReadable(phone_case.sale_price)}</p>
+
+                {phone_case.discount ? (
+                    <div>
+                        <p className="text-sm text-gray-400 line-through">${makeReadable(phone_case.price)}</p>
+                        <div className="flex">
+                            <p className="text-xl text-gray-500 pr-1">${makeReadable(phone_case.sale_price)}</p>
+                            {phone_case.discount.name && <p className="font-semibold text-green-600">{phone_case.discount.rate} % OFF</p>}
+                        </div>
+                    </div>
+                ) : (
+                    <p className="text-xl text-gray-500">${phone_case.sale_price}</p>
+                )}
+
                 <p className="text-sm text-gray-500 truncate ...">{tags.join(", ")}</p>
             </div>
         </div>
