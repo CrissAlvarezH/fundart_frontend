@@ -2,6 +2,10 @@ import Link from "next/link";
 import {makeReadable} from "@/utils/money";
 import {Pagination} from "@nextui-org/pagination";
 import {PhoneCasePagination} from "@/components/phone-case-list/PhoneCasePagination";
+import {Button} from "@nextui-org/button";
+import {MinusIcon, PlusIcon} from "@/components/Icons";
+import {Spacer} from "@nextui-org/spacer";
+import {PhoneCaseItem} from "@/components/phone-case-list/phone-case-item";
 
 
 async function fetchImagePhoneCases(page = 1, tags = [], case_id = undefined) {
@@ -27,9 +31,7 @@ export async function PhoneCaseList({page = 1, tags = [], case_id = undefined}) 
             <div className="grid p-5 grid-cols-4 gap-5 w-full">
                 {
                     cases.results.map(c => (
-                        <Link key={c.id} href={`/cases/${c.id}`}>
-                            <PhoneCase {...c}/>
-                        </Link>
+                        <PhoneCaseItem key={c.id} {...c}/>
                     ))
                 }
             </div>
@@ -40,46 +42,3 @@ export async function PhoneCaseList({page = 1, tags = [], case_id = undefined}) 
     )
 }
 
-
-export function PhoneCase({thumbnail, tags, image_description, phone_case}) {
-    return (
-        <div className="bg-white shadow-lg p-2 rounded-lg border cursor-pointer">
-            <div className="relative flex justify-center">
-                <img className="w-52" alt={image_description} src={thumbnail}/>
-
-                <div className="transition ease-in opacity-0 hover:opacity-100 flex flex-col bg-gradient-to-t from-white justify-end absolute bottom-0 top-0 left-0 right-0">
-                    <div className="py-4 flex flex-col items-center bg-white">
-                        <button
-                            className="bg-cyan-500 shadow px-3 rounded-full py-1 text-white text-sm active:bg-cyan-600"
-                        >
-                            Añadir al carrito
-                        </button>
-                        <button
-                            className="mt-2 bg-green-600 shadow px-3 rounded-full py-1 text-white text-sm active:bg-green-700"
-                        >
-                            Personalizar
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div className="px-2">
-                <p className="text-lg font-semibold truncate ...">{image_description}</p>
-
-                {phone_case.discount ? (
-                    <div>
-                        <p className="text-sm text-gray-400 line-through">${makeReadable(phone_case.price)}</p>
-                        <div className="flex">
-                            <p className="text-xl text-gray-500 pr-1">${makeReadable(phone_case.sale_price)}</p>
-                            {phone_case.discount.name && <p className="font-semibold text-green-600">{phone_case.discount.rate} % OFF</p>}
-                        </div>
-                    </div>
-                ) : (
-                    <p className="text-xl text-gray-500">${phone_case.sale_price}</p>
-                )}
-
-                <p className="text-sm text-gray-500 truncate ...">{tags.join(", ")}</p>
-            </div>
-        </div>
-    )
-}
