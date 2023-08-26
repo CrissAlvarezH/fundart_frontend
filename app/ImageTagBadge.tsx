@@ -24,6 +24,9 @@ export function ImageTagBudget({tag, isSelected}) {
 
             const params = new URLSearchParams(searchParams)
             if (tags.length > 0 ) params.set("tags", tags.join(","))
+            else params.delete("tags")
+
+            params.set("page", "1")
 
             router.push("/?" + params.toString())
         },

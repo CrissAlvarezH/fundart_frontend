@@ -11,7 +11,7 @@ async function fetchImagePhoneCases(page = 1, tags = [], case_id = undefined) {
     if (case_id) params.set("case_id", case_id)
 
     let resp = await fetch(
-        "http://127.0.0.1:8000/api/v1/images-phone-cases?" + params, {cache: "no-store"}
+        "http://127.0.0.1:8000/api/v1/images-phone-cases/?" + params, {cache: "no-store"}
     )
     resp = await resp.json()
     return resp
@@ -20,6 +20,7 @@ async function fetchImagePhoneCases(page = 1, tags = [], case_id = undefined) {
 
 export async function PhoneCaseList({page = 1, tags = [], case_id = undefined}) {
     const cases = await fetchImagePhoneCases(page, tags || [], case_id)
+    console.log("cases", cases)
 
     return (
         <div className="w-full">
