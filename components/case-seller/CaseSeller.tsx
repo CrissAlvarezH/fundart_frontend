@@ -1,7 +1,8 @@
 import {Button} from "@nextui-org/button";
-import {PhoneCaseSelector} from "@/components/case-seller/PhoneCaseSelector";
+import {PhoneCaseRefAndTypeSelector} from "@/components/case-seller/PhoneCaseRefAndTypeSelector";
 import {AddToCartButton} from "@/components/case-seller/AddToCartButton";
 import {Spacer} from "@nextui-org/spacer";
+import {makeReadable} from "@/utils/money";
 
 async function fetchImagePhoneCase(id: string) {
     let resp = await fetch(`http://127.0.0.1:8000/api/v1/images-phone-cases/${id}`, {cache: "no-store"})
@@ -23,9 +24,9 @@ export async function CaseSeller({id}: {id: string}) {
 
                 {phoneCase.phone_case.discount ? (
                     <div>
-                        <p className="text-lg text-gray-400 line-through">${phoneCase.phone_case.price}</p>
+                        <p className="text-lg text-gray-400 line-through">${makeReadable(phoneCase.phone_case.price)}</p>
                         <div className="flex">
-                            <p className="text-3xl text-gray-500 pr-1">${phoneCase.phone_case.sale_price}</p>
+                            <p className="text-3xl text-gray-500 pr-1">${makeReadable(phoneCase.phone_case.sale_price)}</p>
                             {phoneCase.phone_case.discount.name && <p className="font-semibold text-green-600">{phoneCase.phone_case.discount.rate} % OFF</p>}
                         </div>
                         <p className="text-sm text-green-600">Descuento de: {phoneCase.phone_case.discount.name}</p>
@@ -36,9 +37,7 @@ export async function CaseSeller({id}: {id: string}) {
 
                 <Spacer y={5}/>
 
-                <div className="flex items-center">
-                    <PhoneCaseSelector />
-                </div>
+                <PhoneCaseRefAndTypeSelector case_id={id} image_id={phoneCase.image}/>
 
                 <Spacer y={6}/>
 
