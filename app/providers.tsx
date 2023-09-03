@@ -1,12 +1,14 @@
-// app/providers.tsx
 'use client'
 
 import {NextUIProvider} from '@nextui-org/react'
+import {CartProvider} from "@/components/cart/redux/provider";
 
-export function NextUi({children}: { children: React.ReactNode }) {
+export function Providers({children}: { children: React.ReactNode }) {
     return (
-        <NextUIProvider>
-            {children}
-        </NextUIProvider>
+        <CartProvider>
+            <NextUIProvider>
+                {children}
+            </NextUIProvider>
+        </CartProvider>
     )
 }

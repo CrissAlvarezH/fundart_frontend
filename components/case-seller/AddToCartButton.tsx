@@ -3,10 +3,13 @@ import {Button} from "@nextui-org/button";
 import {useState} from "react";
 import {MinusIcon, PlusIcon} from "@/components/Icons";
 import {Spacer} from "@nextui-org/spacer";
+import {useDispatch} from "react-redux";
+import {addProductToCart} from "@/components/cart/redux/slice";
 
 
-export function AddToCartButton({id}: {id: string}) {
+export function AddToCartButton({imagePhoneCase}) {
     const [quantity, setQuantity] = useState(1)
+    const dispath = useDispatch()
 
     return (
         <div className="flex items-center">
@@ -40,6 +43,7 @@ export function AddToCartButton({id}: {id: string}) {
             <Button
                 size="lg"
                 className="rounded-full bg-cyan-500 text-white"
+                onClick={() => dispath(addProductToCart({imagePhoneCase, quantity}))}
             >
                 Agregar al carrito
             </Button>

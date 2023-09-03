@@ -1,11 +1,5 @@
-import Link from "next/link";
-import {makeReadable} from "@/utils/money";
-import {Pagination} from "@nextui-org/pagination";
 import {PhoneCasePagination} from "@/components/phone-case-list/PhoneCasePagination";
-import {Button} from "@nextui-org/button";
-import {MinusIcon, PlusIcon} from "@/components/Icons";
-import {Spacer} from "@nextui-org/spacer";
-import {PhoneCaseItem} from "@/components/phone-case-list/phone-case-item";
+import {PhoneCaseItem} from "@/components/phone-case-list/PhonCaseItem";
 
 
 async function fetchImagePhoneCases(page = 1, tags = [], case_id = undefined) {
